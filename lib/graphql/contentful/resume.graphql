@@ -1,0 +1,6 @@
+query resume($locale: String!) {
+  resume(id: "1waj9zyRpuED5KEnJNwD15", locale: $locale) {
+    title
+    subtitle
+  }
+}

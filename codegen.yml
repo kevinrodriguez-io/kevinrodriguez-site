@@ -1,0 +1,18 @@
+overwrite: true
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/q25vrbd3wsbu:
+      headers:
+        Authorization: Bearer 76aa8a55ad7a96e58e6d092eb478373373ca836523f90b824782d3e2892d726f
+documents: 'lib/**/*.graphql'
+generates:
+  lib/graphql/contentful-graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+    config:
+      preResolveTypes: true
+      transformUnderscore: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write

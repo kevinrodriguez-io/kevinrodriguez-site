@@ -1,0 +1,11 @@
+query landing($locale: String!) {
+  landing(id: "KkFrOhDTYsSXCWXiAWHaT", locale: $locale) {
+    displayName
+    briefing
+    qualities
+    featuredImage {
+        description
+        url
+    }
+  }
+}
