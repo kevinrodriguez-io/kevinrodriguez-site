@@ -1,11 +1,14 @@
 import { NextPage, GetStaticProps } from 'next'
+import Link from 'next/link'
+
 import { css } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
-import Header from 'components/Header'
-import Footer from 'components/Footer'
 
 import graphqlClient from 'lib/graphql/contentful-client'
 import { getSdk, LandingQuery } from 'lib/graphql/contentful-graphql'
+
+import { Nav } from 'components/Nav'
+import { Footer } from 'components/Footer'
 
 type LandingProps = {
   data: LandingQuery
@@ -15,50 +18,68 @@ const Index: NextPage<LandingProps> = ({ data }) => {
   const { briefing, displayName, featuredImage, qualities } = data.landing
   return (
     <>
-      <Header />
-      <section className={css(tw`text-gray-500 bg-gray-900 fixed h-full left-0 right-0 top-0 bottom-0`)}>
-        <div
-          className={css(
-            tw`container mx-auto flex px-5 py-24 md:flex-row flex-col items-center h-full`,
-          )}
-        >
-          <div
+      <Nav />
+      <main
+        className={css(
+          tw`relative bg-gray-50 overflow-hidden flex-1 flex flex-col justify-center px-4 sm:px-2`,
+        )}
+      >
+        <div className={css(tw`text-center`)}>
+          <h2
             className={css(
-              tw`lg:max-w-lg lg:w-full md:w-1/2 w-5/6 md:mb-0 mb-10`,
+              tw`text-4xl tracking-tight leading-10 font-extrabold sm:text-5xl sm:leading-none md:text-6xl text-gray-900`,
             )}
           >
-            <img
-              className={css(tw`object-cover object-center rounded`)}
-              alt="hero"
-              src="https://dummyimage.com/720x600/4ed"
-            />
-          </div>
-          <div
+            {displayName.split(' ')[0]}
+            <br className={css(tw`xl:hidden`)} />
+            <span className={css(tw`text-indigo-600`)}>
+              &nbsp;{displayName.split(' ')[1]}
+            </span>
+          </h2>
+          <p
             className={css(
-              tw`lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center`,
+              tw`mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl`,
             )}
           >
-            <h1
-              className={css(
-                tw`sm:text-4xl text-3xl mb-4 font-medium text-white`,
-              )}
-            >
-              {displayName}
-            </h1>
-            <p className={css(tw`mb-8 leading-relaxed`)}>{briefing}</p>
-            <div className={css(tw`flex justify-center`)}>
-              <button
+            {briefing}
+          </p>
+          <div
+            className={css(
+              tw`mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8`,
+            )}
+          >
+            <div className={css(tw`rounded-md shadow`)}>
+              <a
                 className={css(
-                  tw`inline-flex text-white bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-600 rounded text-lg`,
+                  tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
                 )}
               >
-                View Resume
-              </button>
+                Go To Blog
+              </a>
+            </div>
+            <div className={css(tw`mt-3 rounded-md shadow sm:mt-0 sm:ml-3`)}>
+              <Link href="resume" passHref>
+                <a
+                  className={css(
+                    tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
+                  )}
+                >
+                  View Resume
+                </a>
+              </Link>
             </div>
           </div>
         </div>
-      </section>
+      </main>
       <Footer />
+      <style jsx global>{`
+        /* Other global styles such as 'html, body' etc... */
+        #__next {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
     </>
   )
 }
