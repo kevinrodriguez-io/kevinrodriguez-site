@@ -15,7 +15,7 @@ const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
         <a
           href="#"
           className={css(
-            tw`block pl-3 pr-4 py-2 border-l-4 border-indigo-500 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
+            tw`block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50 focus:outline-none focus:text-blue-800 focus:bg-blue-100 focus:border-blue-700 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
           )}
         >
           Resume
@@ -116,7 +116,7 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             <a
               href="#"
               className={css(
-                tw`inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out`,
+                tw`inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-blue-700 transition duration-150 ease-in-out`,
               )}
             >
               Resume
@@ -144,7 +144,7 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             <button
               type="button"
               className={css(
-                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150`,
+                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150 shadow-blue-xl hover:shadow-blue-sm`,
               )}
             >
               <span>Ver en Español</span>
