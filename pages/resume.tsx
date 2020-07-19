@@ -13,6 +13,7 @@ type ResumeProps = {
 }
 
 const Resume: NextPage<ResumeProps> = ({ data }) => {
+  const { profilePicture, title, subtitle } = data.resume
   return (
     <>
       <Nav />

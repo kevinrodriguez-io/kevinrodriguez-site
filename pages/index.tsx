@@ -15,14 +15,14 @@ type LandingProps = {
   data: LandingQuery
 }
 
-const ConsoleExample: React.FC<{ qualities: string[] }> = ({ qualities }) => {
+const LittleConsole: React.FC<{ qualities: string[] }> = ({ qualities }) => {
   return (
     <p
       className={css(
-        tw`shadow-2xl mt-5 md:mt-8 max-w-full rounded-md pl-6 py-4 bg-gray-900 mx-auto text-base text-gray-200 sm:text-lg md:text-xl md:max-w-3xl text-left w-96`,
+        tw`shadow-gray-next mt-5 md:mt-8 max-w-full rounded-md pl-6 py-4 bg-gray-900 mx-auto text-base text-gray-200 sm:text-lg md:text-xl md:max-w-3xl text-left w-96`,
       )}
     >
-      $&nbsp;
+      >&nbsp;
       <Typed
         loop
         typeSpeed={50}
@@ -45,7 +45,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
       <main
         className={cx(
           css(
-            tw`relative bg-gray-50 flex-1 flex flex-col justify-center px-4 sm:px-2`,
+            tw`relative bg-gray-50 py-8 md:flex md:flex-1 md:flex-col justify-center px-4 sm:px-2`,
           ),
           'dotted-background',
         )}
@@ -75,17 +75,17 @@ const Index: NextPage<LandingProps> = ({ data }) => {
             <div className={css(tw`rounded-md shadow`)}>
               <a
                 className={css(
-                  tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10 shadow-blue-2xl hover:shadow-blue-md`,
+                  tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10 shadow-blue-next hover:shadow-blue`,
                 )}
               >
                 Go To Blog
               </a>
             </div>
-            <div className={css(tw`mt-3 rounded-md shadow sm:mt-0 sm:ml-3`)}>
+            <div className={css(tw`mt-5 rounded-md shadow sm:mt-0 sm:ml-3`)}>
               <Link href="resume" passHref>
                 <a
                   className={css(
-                    tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-blue-600 bg-white hover:text-blue-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
+                    tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-400 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
                   )}
                 >
                   View Resume
@@ -93,7 +93,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
               </Link>
             </div>
           </div>
-          <ConsoleExample qualities={qualities} />
+          <LittleConsole qualities={qualities} />
         </div>
       </main>
       <Footer />
