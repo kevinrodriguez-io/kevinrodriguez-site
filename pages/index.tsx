@@ -19,10 +19,10 @@ const LittleConsole: React.FC<{ qualities: string[] }> = ({ qualities }) => {
   return (
     <p
       className={css(
-        tw`shadow-gray-next mt-5 md:mt-8 max-w-full rounded-md pl-6 py-4 bg-gray-900 mx-auto text-base text-gray-200 sm:text-lg md:text-xl md:max-w-3xl text-left w-96`,
+        tw`font-mono shadow-2xl mt-5 md:mt-8 max-w-full rounded-md pl-6 py-4 bg-gray-900 mx-auto text-base text-gray-200 sm:text-lg md:text-xl md:max-w-3xl text-left w-96`,
       )}
     >
-      >&nbsp;
+      $&nbsp;
       <Typed
         loop
         typeSpeed={50}
