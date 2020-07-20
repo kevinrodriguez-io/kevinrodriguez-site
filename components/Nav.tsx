@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { css, cx } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
+import { ThemeTogle } from './ThemeToggle'
 
 const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
   return (
@@ -92,6 +93,7 @@ type LargeNavProps = {
 }
 
 const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
+  const [isChecked, setIsChecked] = useState(false)
   return (
     <div className={css(tw`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`)}>
       <div className={css(tw`flex justify-between h-16`)}>
@@ -144,11 +146,12 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             <button
               type="button"
               className={css(
-                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150 shadow-blue-xl hover:shadow-blue-sm`,
+                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150 shadow-blue-next hover:shadow-blue z-10`,
               )}
             >
-              <span>Ver en Español</span>
+              <span>Español</span>
             </button>
+            <ThemeTogle checked={isChecked} onToggle={v => setIsChecked(v)} />
           </div>
         </div>
       </div>

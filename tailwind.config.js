@@ -13,6 +13,15 @@ const makeShadow = (name, rgb) => ({
   [`${name}-xl`]: `0 20px 25px -5px rgba(${rgb}, 0.1), 0 10px 10px -5px rgba(${rgb}, 0.04)`,
   [`${name}-2xl`]: `0 25px 50px -12px rgba(${rgb}, 0.25)`,
   [`${name}-inner`]: `inset 0 2px 4px 0 rgba(${rgb}, 0.06)`,
+  [`${name}-xs-full`]: `0 0 0 1px rgba(${rgb}, 1)`,
+  [`${name}-sm-full`]: `0 1px 2px 0 rgba(${rgb}, 1)`,
+  [`${name}-full`]: `0 1px 3px 0 rgba(${rgb}, 1), 0 1px 2px 0 rgba(${rgb}, 1)`,
+  [`${name}-md-full`]: `0 4px 6px -1px rgba(${rgb}, 1), 0 2px 4px -1px rgba(${rgb}, 1)`,
+  [`${name}-lg-full`]: `0 10px 15px -3px rgba(${rgb}, 1), 0 4px 6px -2px rgba(${rgb}, 1)`,
+  [`${name}-xl-full`]: `0 20px 25px -5px rgba(${rgb}, 1), 0 10px 10px -5px rgba(${rgb}, 1)`,
+  [`${name}-2xl-full`]: `0 25px 50px -12px rgba(${rgb}, 1)`,
+  [`${name}-inner-full`]: `inset 0 2px 4px 0 rgba(${rgb}, 1)`,
+  [`${name}-next`]: `0 4px 14px 0 rgba(${rgb}, 0.39)`
 })
 
 module.exports = {
