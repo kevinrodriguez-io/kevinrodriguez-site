@@ -16,7 +16,7 @@ const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
         <a
           href="#"
           className={css(
-            tw`block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50 focus:outline-none focus:text-blue-800 focus:bg-blue-100 focus:border-blue-700 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
+            tw`block pl-3 pr-4 py-2 border-l-4 border-teal-500 text-base font-medium text-teal-700 bg-teal-50 focus:outline-none focus:text-teal-800 focus:bg-teal-100 focus:border-teal-700 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
           )}
         >
           Resume
@@ -102,23 +102,12 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             {/* Mobile menu button */}
             <MobileButton onClick={onMenuOpen} />
           </div>
-          <div className={css(tw`flex-shrink-0 flex items-center`)}>
-            <img
-              className={css(tw`block lg:hidden h-8 w-auto`)}
-              src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg"
-              alt="Workflow logo"
-            />
-            <img
-              className={css(tw`hidden lg:block h-8 w-auto`)}
-              src="https://tailwindui.com/img/logos/workflow-logo-on-white.svg"
-              alt="Workflow logo"
-            />
-          </div>
+          <div className={css(tw`flex-shrink-0 flex items-center`)} />
           <div className={css(tw`hidden md:ml-6 md:flex`)}>
             <a
               href="#"
               className={css(
-                tw`inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-blue-700 transition duration-150 ease-in-out`,
+                tw`inline-flex items-center px-1 pt-1 border-b-2 border-teal-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-teal-700 transition duration-150 ease-in-out`,
               )}
             >
               Resume
@@ -146,12 +135,11 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             <button
               type="button"
               className={css(
-                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150 shadow-blue-next hover:shadow-blue z-10`,
+                tw`relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-teal-600 shadow-sm hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal active:bg-teal-700 transition ease-in-out duration-150 shadow-teal-next hover:shadow-teal z-10`,
               )}
             >
               <span>Español</span>
             </button>
-            <ThemeTogle checked={isChecked} onToggle={v => setIsChecked(v)} />
           </div>
         </div>
       </div>

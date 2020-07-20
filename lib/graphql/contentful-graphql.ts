@@ -1598,12 +1598,7 @@ export type ResumeQuery = {
     __typename?: 'Resume'
     title?: Maybe<string>
     subtitle?: Maybe<string>
-    featuredImage?: Maybe<{
-      __typename?: 'Asset'
-      description?: Maybe<string>
-      title?: Maybe<string>
-      url?: Maybe<string>
-    }>
+    aboutMe?: Maybe<{ __typename?: 'ResumeAboutMe'; json: any }>
     profilePicture?: Maybe<{
       __typename?: 'Asset'
       description?: Maybe<string>
@@ -1631,10 +1626,8 @@ export const ResumeDocument = gql`
     resume(id: "1waj9zyRpuED5KEnJNwD15", locale: $locale) {
       title
       subtitle
-      featuredImage {
-        description
-        title
-        url
+      aboutMe {
+        json
       }
       profilePicture {
         description

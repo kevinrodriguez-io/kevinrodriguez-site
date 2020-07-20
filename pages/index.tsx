@@ -75,7 +75,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
             <div className={css(tw`rounded-md shadow`)}>
               <a
                 className={css(
-                  tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10 shadow-blue-next hover:shadow-blue`,
+                  tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10 shadow-teal-next hover:shadow-teal`,
                 )}
               >
                 Go To Blog
@@ -85,7 +85,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
               <Link href="resume" passHref>
                 <a
                   className={css(
-                    tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-400 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
+                    tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-400 focus:outline-none focus:border-teal-300 focus:shadow-outline-teal transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
                   )}
                 >
                   View Resume
