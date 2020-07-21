@@ -1,6 +1,7 @@
 import { NextPage, GetStaticProps } from 'next'
 import { css } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import graphqlClient from 'lib/graphql/contentful-client'
 import { getSdk, ResumeQuery } from 'lib/graphql/contentful-graphql'
@@ -13,11 +14,11 @@ type ResumeProps = {
 }
 
 const Resume: NextPage<ResumeProps> = ({ data }) => {
-  const { profilePicture, title, subtitle } = data.resume
+  const { profilePicture, title, subtitle, aboutMe } = data.resume
   return (
     <>
       <Nav />
-      <div className={css(tw`relative bg-white overflow-hidden`)}>
+      <section className={css(tw`relative bg-white overflow-hidden`)}>
         <div className={css(tw`hidden lg:block lg:absolute lg:inset-0`)}>
           <svg
             className={css(
@@ -91,16 +92,10 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                 >
                   Kevin Rodriguez
                   <br className={css(tw`hidden md:inline`)} />
-                  <span className={css(tw`text-teal-600`)}>Resume</span>
+                  <span className={css(tw`text-teal-600`)}><span className={css(tw`md:hidden`)}>&nbsp;</span>About</span>
                 </h2>
-                <p
-                  className={css(
-                    tw`mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl`,
-                  )}
-                >
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                  qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
-                  occaecat fugiat aliqua ad ad non deserunt sunt.
+                <p className={css(tw`mt-3 text-gray-500 sm:mt-5 text-base`)}>
+                  {documentToReactComponents(aboutMe.json)}
                 </p>
                 <div
                   className={css(
@@ -108,7 +103,7 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                   )}
                 >
                   <p className={css(tw`text-base font-medium text-gray-900`)}>
-                    Sign up to get notified when it’s ready.
+                    Let's get in touch
                   </p>
                   <form
                     action="#"
@@ -120,26 +115,19 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                       className={css(
                         tw`appearance-none block w-full px-3 py-3 border border-gray-300 text-base leading-6 rounded-md placeholder-gray-500 shadow-sm focus:outline-none focus:placeholder-gray-400 focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:flex-1`,
                       )}
-                      placeholder="Enter your email"
+                      placeholder="email@example.com"
                     />
                     <button
                       type="submit"
                       className={css(
-                        tw`mt-3 w-full px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-800 shadow-sm hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray active:bg-gray-900 transition duration-150 ease-in-out sm:mt-0 sm:ml-3 sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto`,
+                        tw`mt-3 w-full px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-teal-800 shadow-sm hover:bg-teal-700 focus:outline-none focus:border-teal-900 focus:shadow-outline-teal active:bg-teal-900 transition duration-150 ease-in-out sm:mt-0 sm:ml-3 sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto shadow-teal-md-full hover:shadow-teal-md`,
                       )}
                     >
-                      Notify me
+                      Submit
                     </button>
                   </form>
                   <p className={css(tw`mt-3 text-sm leading-5 text-gray-500`)}>
-                    We care about the protection of your data. Read our
-                    <a
-                      href="#"
-                      className={css(tw`font-medium text-gray-900 underline`)}
-                    >
-                      Privacy Policy
-                    </a>
-                    .
+                    Don't worry, your data is only yours.
                   </p>
                 </div>
               </div>
@@ -195,45 +183,253 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                     tw`relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md`,
                   )}
                 >
-                  <button
-                    type="button"
+                  <div
                     className={css(
-                      tw`relative block w-full rounded-lg overflow-hidden focus:outline-none focus:shadow-outline`,
+                      tw`relative block w-full rounded-lg overflow-hidden`,
                     )}
                   >
                     <img
                       className={css(tw`w-full`)}
-                      src="https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                      alt="Woman making a sale"
+                      src={profilePicture.url}
+                      alt={profilePicture.description}
                     />
-                    <div
-                      className={css(
-                        tw`absolute inset-0 w-full h-full flex items-center justify-center`,
-                      )}
-                    >
-                      <svg
-                        className={css(tw`h-20 w-20 text-teal-500`)}
-                        fill="currentColor"
-                        viewBox="0 0 84 84"
-                      >
-                        <circle
-                          opacity="0.9"
-                          cx="42"
-                          cy="42"
-                          r="42"
-                          fill="white"
-                        />
-                        <path d="M55.5039 40.3359L37.1094 28.0729C35.7803 27.1869 34 28.1396 34 29.737V54.263C34 55.8604 35.7803 56.8131 37.1094 55.9271L55.5038 43.6641C56.6913 42.8725 56.6913 41.1275 55.5039 40.3359Z" />
-                      </svg>
-                    </div>
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
           </main>
         </div>
-      </div>
-      {/* {JSON.stringify(data, null, 2)} */}
+      </section>
+      <section className={css(tw`text-gray-700`)}>
+        <div className={css(tw`container px-5 mx-auto flex flex-wrap`)}>
+          <h2
+            className={css(
+              tw`mb-5 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
+            )}
+          >
+            Work Experience
+          </h2>
+          <div
+            className={css(
+              tw`flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto`,
+            )}
+          >
+            <div
+              className={css(
+                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
+              )}
+            >
+              <div
+                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
+              />
+            </div>
+            <div
+              className={css(
+                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
+              )}
+            >
+              1
+            </div>
+            <div
+              className={css(
+                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
+              )}
+            >
+              <div
+                className={css(
+                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
+                )}
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className={css(tw`w-12 h-12`)}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
+                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
+                  Shooting Stars
+                </h2>
+                <p className={css(tw`leading-relaxed`)}>
+                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
+                  bespoke try-hard cliche palo santo offal.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            className={css(
+              tw`flex relative pb-20 sm:items-center md:w-2/3 mx-auto`,
+            )}
+          >
+            <div
+              className={css(
+                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
+              )}
+            >
+              <div
+                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
+              ></div>
+            </div>
+            <div
+              className={css(
+                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
+              )}
+            >
+              2
+            </div>
+            <div
+              className={css(
+                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
+              )}
+            >
+              <div
+                className={css(
+                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
+                )}
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className={css(tw`w-12 h-12`)}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
+                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
+                  The Catalyzer
+                </h2>
+                <p className={css(tw`leading-relaxed`)}>
+                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
+                  bespoke try-hard cliche palo santo offal.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            className={css(
+              tw`flex relative pb-20 sm:items-center md:w-2/3 mx-auto`,
+            )}
+          >
+            <div
+              className={css(
+                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
+              )}
+            >
+              <div
+                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
+              ></div>
+            </div>
+            <div
+              className={css(
+                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
+              )}
+            >
+              3
+            </div>
+            <div
+              className={css(
+                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
+              )}
+            >
+              <div
+                className={css(
+                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
+                )}
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className={css(tw`w-12 h-12`)}
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="5" r="3"></circle>
+                  <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
+                </svg>
+              </div>
+              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
+                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
+                  The 400 Blows
+                </h2>
+                <p className={css(tw`leading-relaxed`)}>
+                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
+                  bespoke try-hard cliche palo santo offal.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            className={css(
+              tw`flex relative pb-10 sm:items-center md:w-2/3 mx-auto`,
+            )}
+          >
+            <div
+              className={css(
+                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
+              )}
+            >
+              <div
+                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
+              ></div>
+            </div>
+            <div
+              className={css(
+                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
+              )}
+            >
+              4
+            </div>
+            <div
+              className={css(
+                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
+              )}
+            >
+              <div
+                className={css(
+                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
+                )}
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className={css(tw`w-12 h-12`)}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
+                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
+                  Neptune
+                </h2>
+                <p className={css(tw`leading-relaxed`)}>
+                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
+                  bespoke try-hard cliche palo santo offal.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <pre style={{ maxWidth: '100%', overflowX: 'scroll' }}>{JSON.stringify(data, null, 2)}</pre>
       <Footer />
     </>
   )

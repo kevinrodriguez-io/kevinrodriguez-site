@@ -2,6 +2,18 @@ query resume($locale: String!) {
   resume(id: "1waj9zyRpuED5KEnJNwD15", locale: $locale) {
     title
     subtitle
+    previousWorkCollection {
+      items {
+        companyName
+        jobTitle
+        from
+        to
+        category
+        responsibilities {
+          json
+        }
+      }
+    }
     aboutMe {
       json
     }
