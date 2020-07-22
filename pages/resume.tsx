@@ -1,20 +1,119 @@
 import { NextPage, GetStaticProps } from 'next'
-import { css } from '@emotion/css'
+import { css, cx } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import graphqlClient from 'lib/graphql/contentful-client'
-import { getSdk, ResumeQuery } from 'lib/graphql/contentful-graphql'
+import {
+  getSdk,
+  ResumeQuery,
+  PreviousWork,
+  PreviousWorkCollection,
+} from 'lib/graphql/contentful-graphql'
 
 import { Nav } from 'components/Nav'
 import { Footer } from 'components/Footer'
+
+type WorkExperienceTimeLineProps = {
+  previousWork: PreviousWorkCollection
+}
+
+const WorkExperienceTimeLine: React.FC<WorkExperienceTimeLineProps> = ({
+  previousWork,
+}) => {
+  let counter = previousWork.items.length + 1
+  return (
+    <section className={css(tw`text-gray-700`)}>
+      <div className={css(tw`container px-5 mx-auto flex flex-wrap`)}>
+        <h2
+          className={css(
+            tw`mb-5 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
+          )}
+        >
+          Work Experience
+        </h2>
+        {previousWork.items.map((previousWorkItem, i) => {
+          counter--
+          return (
+            <TimeLineItem
+              key={i}
+              index={counter}
+              previousWorkItem={previousWorkItem as PreviousWork}
+            />
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+type TimeLineItemProps = {
+  previousWorkItem: PreviousWork
+  index: number
+}
+
+const TimeLineItem: React.FC<TimeLineItemProps> = ({
+  previousWorkItem,
+  index,
+}) => {
+  return (
+    <div
+      className={css(
+        tw`flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto`,
+      )}
+    >
+      <div
+        className={css(
+          tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
+        )}
+      >
+        <div className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)} />
+      </div>
+      <div
+        className={cx(
+          css(
+            tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-xs`,
+          ),
+        )}
+      >
+        {new Date(previousWorkItem.from).getFullYear().toString().substr(2)}
+      </div>
+      <div
+        className={css(
+          tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
+        )}
+      >
+        <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
+          <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
+            {previousWorkItem.jobTitle}
+            <span className={css(tw`text-gray-500 font-hairline`)}>
+              &nbsp;|&nbsp;
+              <span className={css(tw`font-light`)}>
+                {previousWorkItem.companyName}
+              </span>
+            </span>
+          </h2>
+          <div className={css(tw`leading-relaxed`)}>
+            {documentToReactComponents(previousWorkItem.responsibilities.json)}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 type ResumeProps = {
   data: ResumeQuery
 }
 
 const Resume: NextPage<ResumeProps> = ({ data }) => {
-  const { profilePicture, title, subtitle, aboutMe } = data.resume
+  const {
+    profilePicture,
+    title,
+    subtitle,
+    aboutMe,
+    previousWorkCollection,
+  } = data.resume
   return (
     <>
       <Nav />
@@ -73,7 +172,6 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
           >
             <div className={css(tw`rounded-lg shadow-md`)}></div>
           </div>
-
           <main
             className={css(
               tw`mt-8 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-20 xl:mt-24`,
@@ -92,7 +190,9 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                 >
                   Kevin Rodriguez
                   <br className={css(tw`hidden md:inline`)} />
-                  <span className={css(tw`text-teal-600`)}><span className={css(tw`md:hidden`)}>&nbsp;</span>About</span>
+                  <span className={css(tw`text-teal-600`)}>
+                    <span className={css(tw`md:hidden`)}>&nbsp;</span>About
+                  </span>
                 </h2>
                 <p className={css(tw`mt-3 text-gray-500 sm:mt-5 text-base`)}>
                   {documentToReactComponents(aboutMe.json)}
@@ -200,236 +300,11 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
           </main>
         </div>
       </section>
-      <section className={css(tw`text-gray-700`)}>
-        <div className={css(tw`container px-5 mx-auto flex flex-wrap`)}>
-          <h2
-            className={css(
-              tw`mb-5 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
-            )}
-          >
-            Work Experience
-          </h2>
-          <div
-            className={css(
-              tw`flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto`,
-            )}
-          >
-            <div
-              className={css(
-                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
-              )}
-            >
-              <div
-                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
-              />
-            </div>
-            <div
-              className={css(
-                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
-              )}
-            >
-              1
-            </div>
-            <div
-              className={css(
-                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
-              )}
-            >
-              <div
-                className={css(
-                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className={css(tw`w-12 h-12`)}
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
-                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
-                  Shooting Stars
-                </h2>
-                <p className={css(tw`leading-relaxed`)}>
-                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
-                  bespoke try-hard cliche palo santo offal.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={css(
-              tw`flex relative pb-20 sm:items-center md:w-2/3 mx-auto`,
-            )}
-          >
-            <div
-              className={css(
-                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
-              )}
-            >
-              <div
-                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
-              ></div>
-            </div>
-            <div
-              className={css(
-                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
-              )}
-            >
-              2
-            </div>
-            <div
-              className={css(
-                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
-              )}
-            >
-              <div
-                className={css(
-                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className={css(tw`w-12 h-12`)}
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                </svg>
-              </div>
-              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
-                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
-                  The Catalyzer
-                </h2>
-                <p className={css(tw`leading-relaxed`)}>
-                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
-                  bespoke try-hard cliche palo santo offal.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={css(
-              tw`flex relative pb-20 sm:items-center md:w-2/3 mx-auto`,
-            )}
-          >
-            <div
-              className={css(
-                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
-              )}
-            >
-              <div
-                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
-              ></div>
-            </div>
-            <div
-              className={css(
-                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
-              )}
-            >
-              3
-            </div>
-            <div
-              className={css(
-                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
-              )}
-            >
-              <div
-                className={css(
-                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className={css(tw`w-12 h-12`)}
-                  viewBox="0 0 24 24"
-                >
-                  <circle cx="12" cy="5" r="3"></circle>
-                  <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
-                </svg>
-              </div>
-              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
-                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
-                  The 400 Blows
-                </h2>
-                <p className={css(tw`leading-relaxed`)}>
-                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
-                  bespoke try-hard cliche palo santo offal.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={css(
-              tw`flex relative pb-10 sm:items-center md:w-2/3 mx-auto`,
-            )}
-          >
-            <div
-              className={css(
-                tw`h-full w-6 absolute inset-0 flex items-center justify-center`,
-              )}
-            >
-              <div
-                className={css(tw`h-full w-1 bg-gray-200 pointer-events-none`)}
-              ></div>
-            </div>
-            <div
-              className={css(
-                tw`flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-teal-500 text-white relative z-10 font-medium text-sm`,
-              )}
-            >
-              4
-            </div>
-            <div
-              className={css(
-                tw`flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row`,
-              )}
-            >
-              <div
-                className={css(
-                  tw`flex-shrink-0 w-24 h-24 bg-teal-100 text-teal-500 rounded-full inline-flex items-center justify-center`,
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className={css(tw`w-12 h-12`)}
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
-              <div className={css(tw`flex-grow sm:pl-6 mt-6 sm:mt-0`)}>
-                <h2 className={css(tw`font-medium text-gray-900 mb-1 text-xl`)}>
-                  Neptune
-                </h2>
-                <p className={css(tw`leading-relaxed`)}>
-                  VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
-                  bespoke try-hard cliche palo santo offal.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <pre style={{ maxWidth: '100%', overflowX: 'scroll' }}>{JSON.stringify(data, null, 2)}</pre>
+      <WorkExperienceTimeLine
+        previousWork={
+          (previousWorkCollection as unknown) as PreviousWorkCollection
+        }
+      />
       <Footer />
     </>
   )

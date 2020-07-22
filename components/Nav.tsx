@@ -103,7 +103,7 @@ const LargeNav: React.FC<LargeNavProps> = ({ menuOpen, onMenuOpen }) => {
             <MobileButton onClick={onMenuOpen} />
           </div>
           <div className={css(tw`flex-shrink-0 flex items-center`)} />
-          <div className={css(tw`hidden md:ml-6 md:flex`)}>
+          <div className={css(tw`hidden md:flex`)}>
             <a
               href="#"
               className={css(
