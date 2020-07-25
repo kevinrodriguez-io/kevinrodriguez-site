@@ -1615,6 +1615,17 @@ export type ResumeQuery = {
         }>
       >
     }>
+    availableTechnologiesCollection?: Maybe<{
+      __typename?: 'ResumeAvailableTechnologiesCollection'
+      items: Array<
+        Maybe<{
+          __typename?: 'AvailableTechnology'
+          name?: Maybe<string>
+          category?: Maybe<string>
+          stars?: Maybe<number>
+        }>
+      >
+    }>
     aboutMe?: Maybe<{ __typename?: 'ResumeAboutMe'; json: any }>
     profilePicture?: Maybe<{
       __typename?: 'Asset'
@@ -1653,6 +1664,13 @@ export const ResumeDocument = gql`
           responsibilities {
             json
           }
+        }
+      }
+      availableTechnologiesCollection {
+        items {
+          name
+          category
+          stars
         }
       }
       aboutMe {
