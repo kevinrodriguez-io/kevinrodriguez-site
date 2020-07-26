@@ -16,6 +16,7 @@ import {
   ResumeAboutMe,
 } from 'lib/graphql/contentful-graphql'
 import { groupBy } from 'lib/tools/groupBy'
+import { sortWithKeyRetrieverDescending } from 'lib/tools/sortBy'
 
 type ResumeProps = {
   data: ResumeQuery
@@ -28,9 +29,11 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
     previousWorkCollection,
     availableTechnologiesCollection,
   } = data.resume
-  const groupedTechnologies = groupBy(
-    availableTechnologiesCollection.items,
-    i => i.category,
+  const groupedTechnologies = sortWithKeyRetrieverDescending(
+    Object.entries(
+      groupBy(availableTechnologiesCollection.items, i => i.category),
+    ),
+    ([, value]) => value.length,
   )
   return (
     <>
@@ -52,16 +55,16 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                 tw`mb-5 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
               )}
             >
-              Technologies I'm Profficient With
+              Technologies I'm Proficient With
             </h2>
           </div>
           <div className={css(tw`flex flex-wrap -m-4`)}>
-            {Object.entries(groupedTechnologies).map(
-              ([category, technologies]) => (
+            {groupedTechnologies.map(([category, technologies]) => {
+              return (
                 <div className={css(tw`p-4 lg:w-1/4 sm:w-1/2 w-full`)}>
                   <h2
                     className={css(
-                      tw`font-medium  tracking-widest text-gray-900 mb-4 text-sm text-center sm:text-left`,
+                      tw`font-medium tracking-widest text-gray-900 mb-4 text-sm text-center sm:text-left`,
                     )}
                   >
                     {category}
@@ -95,8 +98,8 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
                     ))}
                   </div>
                 </div>
-              ),
-            )}
+              )
+            })}
           </div>
         </div>
       </section>

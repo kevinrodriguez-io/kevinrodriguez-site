@@ -1,0 +1,6 @@
+{
+    "cSpell.words": [
+        "contentful"
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}

@@ -7,7 +7,7 @@ const SiteApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Tailwindcss Emotion Example</title>
+        <title>Kevin Rodriguez Site</title>
       </Head>
       <Component {...pageProps} />
     </>

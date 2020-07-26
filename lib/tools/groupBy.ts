@@ -1,3 +1,8 @@
+/**
+ * Groups a list by the given key
+ * @param list Input list to be grouped
+ * @param getKey Function that returns the element argument to be used as key
+ */
 export const groupBy = <T, K extends string | number | symbol>(
   list: T[],
   getKey: (item: T) => K,
