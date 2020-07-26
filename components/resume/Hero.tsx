@@ -86,9 +86,9 @@ export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
                   <span className={css(tw`md:hidden`)}>&nbsp;</span>About
                 </span>
               </h2>
-              <p className={css(tw`mt-3 text-gray-500 sm:mt-5 text-base`)}>
+              <div className={css(tw`mt-3 text-gray-500 sm:mt-5 text-base`)}>
                 {documentToReactComponents(aboutMe.json)}
-              </p>
+              </div>
               <div
                 className={css(
                   tw`mt-5 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0`,

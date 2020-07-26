@@ -31,7 +31,6 @@ export const WorkExperienceTimeLine: React.FC<WorkExperienceTimeLineProps> = ({
           return (
             <TimeLineItem
               key={i}
-              index={counter}
               previousWorkItem={previousWorkItem as PreviousWork}
             />
           )

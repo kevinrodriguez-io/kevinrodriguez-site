@@ -1633,6 +1633,36 @@ export type ResumeQuery = {
       title?: Maybe<string>
       url?: Maybe<string>
     }>
+    studiesCollection?: Maybe<{
+      __typename?: 'ResumeStudiesCollection'
+      items: Array<
+        Maybe<{
+          __typename?: 'FormalStudy'
+          from?: Maybe<any>
+          to?: Maybe<any>
+          degree?: Maybe<string>
+          institutionName?: Maybe<string>
+          institutionImage?: Maybe<{
+            __typename?: 'Asset'
+            title?: Maybe<string>
+            description?: Maybe<string>
+            url?: Maybe<string>
+          }>
+        }>
+      >
+    }>
+    otherStudiesCollection?: Maybe<{
+      __typename?: 'ResumeOtherStudiesCollection'
+      items: Array<
+        Maybe<{
+          __typename?: 'ResumeOtherStudies'
+          title?: Maybe<string>
+          certificateUrl?: Maybe<string>
+          institutionName?: Maybe<string>
+          instructor?: Maybe<string>
+        }>
+      >
+    }>
   }>
 }
 
@@ -1680,6 +1710,27 @@ export const ResumeDocument = gql`
         description
         title
         url
+      }
+      studiesCollection {
+        items {
+          from
+          to
+          degree
+          institutionName
+          institutionImage {
+            title
+            description
+            url
+          }
+        }
+      }
+      otherStudiesCollection {
+        items {
+          title
+          certificateUrl
+          institutionName
+          instructor
+        }
       }
     }
   }

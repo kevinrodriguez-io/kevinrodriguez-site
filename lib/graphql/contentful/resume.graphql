@@ -29,5 +29,26 @@ query resume($locale: String!) {
       title
       url
     }
+    studiesCollection {
+      items {
+        from
+        to
+        degree
+        institutionName
+        institutionImage {
+          title
+          description
+          url
+        }
+      }
+    }
+    otherStudiesCollection {
+      items {
+        title
+        certificateUrl
+        institutionName
+        instructor
+      }
+    }
   }
 }
