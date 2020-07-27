@@ -1,0 +1,1 @@
+export const APPEAR_TRANSITION_TIME = 1.5

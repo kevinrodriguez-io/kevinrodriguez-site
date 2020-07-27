@@ -1,4 +1,4 @@
-query landing($locale: String!) {
+query getLanding($locale: String!) {
   landing(id: "KkFrOhDTYsSXCWXiAWHaT", locale: $locale) {
     displayName
     briefing

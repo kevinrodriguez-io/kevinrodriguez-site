@@ -9,9 +9,12 @@ type HeroProps = {
   profilePicture: Asset
 }
 
-export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
+export const HeroSection: React.FC<HeroProps> = ({
+  aboutMe,
+  profilePicture,
+}) => {
   return (
-    <section className={css(tw`relative bg-white overflow-hidden`)}>
+    <section className={css(tw`relative bg-white overflow-hidden py-12`)}>
       <div className={css(tw`hidden lg:block lg:absolute lg:inset-0`)}>
         <svg
           className={css(
@@ -56,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
           />
         </svg>
       </div>
-      <div className={css(tw`relative pt-6 pb-16 md:pb-20 lg:pb-24 xl:pb-32`)}>
+      <div className={css(tw`relative`)}>
         <div
           className={css(
             tw`absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden`,
@@ -64,11 +67,7 @@ export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
         >
           <div className={css(tw`rounded-lg shadow-md`)}></div>
         </div>
-        <main
-          className={css(
-            tw`mt-8 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-20 xl:mt-24`,
-          )}
-        >
+        <main className={css(tw`mx-auto max-w-screen-xl px-4 sm:px-6`)}>
           <div className={css(tw`lg:grid lg:grid-cols-12 lg:gap-8`)}>
             <div
               className={css(
@@ -77,13 +76,13 @@ export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
             >
               <h2
                 className={css(
-                  tw`mt-1 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
+                  tw`text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl`,
                 )}
               >
                 Kevin Rodriguez
                 <br className={css(tw`hidden md:inline`)} />
                 <span className={css(tw`text-teal-600`)}>
-                  <span className={css(tw`md:hidden`)}>&nbsp;</span>About
+                  <span className={css(tw`md:hidden`)}>&nbsp;</span>Resume
                 </span>
               </h2>
               <div className={css(tw`mt-3 text-gray-500 sm:mt-5 text-base`)}>
@@ -118,9 +117,6 @@ export const Hero: React.FC<HeroProps> = ({ aboutMe, profilePicture }) => {
                     Submit
                   </button>
                 </form>
-                <p className={css(tw`mt-3 text-sm leading-5 text-gray-500`)}>
-                  Don't worry, your data is only yours.
-                </p>
               </div>
             </div>
             <div

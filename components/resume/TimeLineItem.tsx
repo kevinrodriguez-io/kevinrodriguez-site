@@ -1,8 +1,11 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 import { css, cx } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { PreviousWork } from 'lib/graphql/contentful-graphql'
+import { APPEAR_TRANSITION_TIME } from 'lib/variables'
 
 export type TimeLineItemProps = {
   previousWorkItem: PreviousWork
@@ -11,11 +14,19 @@ export type TimeLineItemProps = {
 export const TimeLineItem: React.FC<TimeLineItemProps> = ({
   previousWorkItem,
 }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+  })
   return (
-    <div
+    <motion.div
+      ref={ref}
       className={css(
         tw`flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto`,
       )}
+      animate={{
+        opacity: inView ? 1 : 0,
+      }}
+      transition={{ duration: APPEAR_TRANSITION_TIME }}
     >
       <div
         className={css(
@@ -53,6 +64,6 @@ export const TimeLineItem: React.FC<TimeLineItemProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

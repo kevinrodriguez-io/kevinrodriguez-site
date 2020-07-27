@@ -1,44 +1,23 @@
 import { NextPage, GetStaticProps } from 'next'
 import Link from 'next/link'
 
-import Typed from 'react-typed'
 import { css, cx } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
 
 import graphqlClient from 'lib/graphql/contentful-client'
-import { getSdk, LandingQuery } from 'lib/graphql/contentful-graphql'
+import { getSdk, GetLandingQuery } from 'lib/graphql/contentful-graphql'
 
 import { Nav } from 'components/Nav'
 import { Footer } from 'components/Footer'
+import { LittleConsole } from 'components/LittleConsole'
+import { I18nAwareLink } from 'components/I18nAwareLink'
 
-type LandingProps = {
-  data: LandingQuery
-}
-
-const LittleConsole: React.FC<{ qualities: string[] }> = ({ qualities }) => {
-  return (
-    <p
-      className={css(
-        tw`font-mono shadow-2xl mt-5 md:mt-8 max-w-full rounded-md pl-6 py-4 bg-gray-900 mx-auto text-base text-gray-200 sm:text-lg md:text-xl md:max-w-3xl text-left w-96`,
-      )}
-    >
-      $&nbsp;
-      <Typed
-        loop
-        typeSpeed={50}
-        backSpeed={0}
-        strings={qualities.map(q => q.toLowerCase())}
-        backDelay={1500}
-        loopCount={0}
-        showCursor
-        cursorChar="_"
-      />
-    </p>
-  )
+export type LandingProps = {
+  data: GetLandingQuery
 }
 
 const Index: NextPage<LandingProps> = ({ data }) => {
-  const { briefing, displayName, featuredImage, qualities } = data.landing
+  const { briefing, displayName, qualities } = data.landing
   return (
     <>
       <Nav />
@@ -82,7 +61,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
               </a>
             </div>
             <div className={css(tw`mt-5 rounded-md shadow sm:mt-0 sm:ml-3`)}>
-              <Link href="resume" passHref>
+              <I18nAwareLink href="/resume" passHref>
                 <a
                   className={css(
                     tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-400 focus:outline-none focus:border-teal-300 focus:shadow-outline-teal transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
@@ -90,7 +69,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
                 >
                   View Resume
                 </a>
-              </Link>
+              </I18nAwareLink>
             </div>
           </div>
           <LittleConsole qualities={qualities} />
@@ -98,8 +77,13 @@ const Index: NextPage<LandingProps> = ({ data }) => {
       </main>
       <Footer />
       <style jsx global>{`
-        /* Other global styles such as 'html, body' etc... */
         #__next {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        div[class^='page-transition'],
+        div[class*=' page-transition'] {
           height: 100%;
           display: flex;
           flex-direction: column;
@@ -109,16 +93,13 @@ const Index: NextPage<LandingProps> = ({ data }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<LandingProps> = async () => {
-  const { landing } = getSdk(graphqlClient)
-  const data = await landing({
-    locale: 'en-US',
-  })
-  return {
-    props: {
-      data,
-    },
-  }
+export const getIndexStaticProps = async (locale: string) => {
+  const { getLanding } = getSdk(graphqlClient)
+  const data = await getLanding({ locale })
+  return { props: { data } }
 }
+
+export const getStaticProps: GetStaticProps<LandingProps> = async () =>
+  await getIndexStaticProps('en-US')
 
 export default Index

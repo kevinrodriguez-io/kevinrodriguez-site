@@ -1569,11 +1569,11 @@ export enum AvailableTechnologyOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
-export type LandingQueryVariables = Exact<{
+export type GetLandingQueryVariables = Exact<{
   locale: Scalars['String']
 }>
 
-export type LandingQuery = {
+export type GetLandingQuery = {
   __typename?: 'Query'
   landing?: Maybe<{
     __typename?: 'Landing'
@@ -1588,11 +1588,11 @@ export type LandingQuery = {
   }>
 }
 
-export type ResumeQueryVariables = Exact<{
+export type GetResumeQueryVariables = Exact<{
   locale: Scalars['String']
 }>
 
-export type ResumeQuery = {
+export type GetResumeQuery = {
   __typename?: 'Query'
   resume?: Maybe<{
     __typename?: 'Resume'
@@ -1666,8 +1666,8 @@ export type ResumeQuery = {
   }>
 }
 
-export const LandingDocument = gql`
-  query landing($locale: String!) {
+export const GetLandingDocument = gql`
+  query getLanding($locale: String!) {
     landing(id: "KkFrOhDTYsSXCWXiAWHaT", locale: $locale) {
       displayName
       briefing
@@ -1679,8 +1679,8 @@ export const LandingDocument = gql`
     }
   }
 `
-export const ResumeDocument = gql`
-  query resume($locale: String!) {
+export const GetResumeDocument = gql`
+  query getResume($locale: String!) {
     resume(id: "1waj9zyRpuED5KEnJNwD15", locale: $locale) {
       title
       subtitle
@@ -1744,14 +1744,14 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper,
 ) {
   return {
-    landing(variables: LandingQueryVariables): Promise<LandingQuery> {
+    getLanding(variables: GetLandingQueryVariables): Promise<GetLandingQuery> {
       return withWrapper(() =>
-        client.request<LandingQuery>(print(LandingDocument), variables),
+        client.request<GetLandingQuery>(print(GetLandingDocument), variables),
       )
     },
-    resume(variables: ResumeQueryVariables): Promise<ResumeQuery> {
+    getResume(variables: GetResumeQueryVariables): Promise<GetResumeQuery> {
       return withWrapper(() =>
-        client.request<ResumeQuery>(print(ResumeDocument), variables),
+        client.request<GetResumeQuery>(print(GetResumeDocument), variables),
       )
     },
   }
