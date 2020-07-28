@@ -7,27 +7,28 @@ import { useRouter } from 'next/router'
 import { LanguageTogglerButton } from './LanguageTogglerButton'
 import { ParsedUrlQuery } from 'querystring'
 import { removeTrailingSlash } from 'lib/tools/removeTrailingSlash'
+import { DictionaryTranslationProp } from 'lib/i18n/types'
 
 type SiteLink = {
   title: string
   href: string
 }
 
-const siteLinks: SiteLink[] = [
+const generateSiteLinks = (t: Record<string, string>): SiteLink[] => [
   {
-    title: 'Home',
+    title: t['home'],
     href: '/',
   },
   {
-    title: 'Resume',
+    title: t['resume'],
     href: '/resume',
   },
   {
-    title: 'Blog',
+    title: t['blog'],
     href: '/blog',
   },
   {
-    title: 'Open Source',
+    title: t['openSource'],
     href: '/open-source',
   },
 ]
@@ -35,7 +36,11 @@ const siteLinks: SiteLink[] = [
 const getRoutesPrefix = (query: ParsedUrlQuery) =>
   `${query.lang ? `/${query.lang}` : ''}`
 
-const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
+type MobileNavProps = DictionaryTranslationProp & {
+  menuOpen: boolean
+}
+
+const MobileNav: React.FC<MobileNavProps> = ({ t, menuOpen }) => {
   const router = useRouter()
   const routesPrefix = getRoutesPrefix(router.query)
   return (
@@ -47,7 +52,7 @@ const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
       )}
     >
       <div className={css(tw`pt-2 pb-3`)}>
-        {siteLinks.map((siteLink, index) => {
+        {generateSiteLinks(t).map((siteLink, index) => {
           const prefixedHref = removeTrailingSlash(
             `${routesPrefix}${siteLink.href}`,
           )
@@ -59,12 +64,16 @@ const MobileNav: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
                   {
                     [css(
                       tw`block pl-3 pr-4 py-2 border-l-4 border-teal-500 text-base font-medium text-teal-700 bg-teal-50 focus:outline-none focus:text-teal-800 focus:bg-teal-100 focus:border-teal-700 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
-                    )]: router.pathname.toLowerCase() === prefixedHref,
+                    )]:
+                      router.asPath.toLowerCase() ===
+                      prefixedHref.toLowerCase(),
                   },
                   {
                     [css(
                       tw`mt-1 block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out sm:pl-5 sm:pr-6`,
-                    )]: router.pathname.toLowerCase() !== prefixedHref,
+                    )]:
+                      router.asPath.toLowerCase() !==
+                      prefixedHref.toLowerCase(),
                   },
                 )}
               >
@@ -120,11 +129,11 @@ const MobileButton: React.FC<MobileButtonProps> = ({ ...props }) => {
   )
 }
 
-type LargeNavProps = {
+type LargeNavProps = DictionaryTranslationProp & {
   onMenuOpen: () => void
 }
 
-const LargeNav: React.FC<LargeNavProps> = ({ onMenuOpen }) => {
+const LargeNav: React.FC<LargeNavProps> = ({ t, onMenuOpen }) => {
   const router = useRouter()
   const routesPrefix = getRoutesPrefix(router.query)
   return (
@@ -136,7 +145,7 @@ const LargeNav: React.FC<LargeNavProps> = ({ onMenuOpen }) => {
           </div>
           <div className={css(tw`flex-shrink-0 flex items-center`)} />
           <div className={css(tw`hidden md:flex`)}>
-            {siteLinks.map((siteLink, index) => {
+            {generateSiteLinks(t).map((siteLink, index) => {
               const prefixedHref = removeTrailingSlash(
                 `${routesPrefix}${siteLink.href}`,
               )
@@ -147,7 +156,8 @@ const LargeNav: React.FC<LargeNavProps> = ({ onMenuOpen }) => {
                       { [css(tw`ml-8`)]: index !== 0 },
                       {
                         [css(tw`pt-1 border-b-2 border-teal-500`)]:
-                          router.pathname.toLowerCase() === prefixedHref,
+                          router.asPath.toLowerCase() ===
+                          prefixedHref.toLowerCase(),
                       },
                       css(
                         tw`inline-flex items-center px-1 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-teal-700 transition duration-150 ease-in-out`,
@@ -171,12 +181,14 @@ const LargeNav: React.FC<LargeNavProps> = ({ onMenuOpen }) => {
   )
 }
 
-export const Nav: React.FC = () => {
+export type NavProps = DictionaryTranslationProp
+
+export const Nav: React.FC<NavProps> = ({ t }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   return (
     <nav className={css(tw`bg-white shadow`)}>
-      <LargeNav onMenuOpen={() => setMenuOpen(o => !o)} />
-      <MobileNav menuOpen={menuOpen} />
+      <LargeNav t={t} onMenuOpen={() => setMenuOpen(o => !o)} />
+      <MobileNav t={t} menuOpen={menuOpen} />
     </nav>
   )
 }

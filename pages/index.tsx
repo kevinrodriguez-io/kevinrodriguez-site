@@ -1,5 +1,4 @@
 import { NextPage, GetStaticProps } from 'next'
-import Link from 'next/link'
 
 import { css, cx } from '@emotion/css'
 import tw from '@tailwindcssinjs/macro'
@@ -11,16 +10,19 @@ import { Nav } from 'components/Nav'
 import { Footer } from 'components/Footer'
 import { LittleConsole } from 'components/LittleConsole'
 import { I18nAwareLink } from 'components/I18nAwareLink'
+import { getI18nDictionary } from 'lib/i18n/getI18nDictionary'
+import { LOCALE_LANGUAGE_MAPPINGS } from 'lib/i18n/langs'
+import { DictionaryTranslationProp } from 'lib/i18n/types'
 
-export type LandingProps = {
+export type LandingProps = DictionaryTranslationProp & {
   data: GetLandingQuery
 }
 
-const Index: NextPage<LandingProps> = ({ data }) => {
+const Index: NextPage<LandingProps> = ({ data, t }) => {
   const { briefing, displayName, qualities } = data.landing
   return (
     <>
-      <Nav />
+      <Nav t={t} />
       <main
         className={cx(
           css(
@@ -57,7 +59,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
                   tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10 shadow-teal-next hover:shadow-teal`,
                 )}
               >
-                Go To Blog
+                {t['goToBlog']}
               </a>
             </div>
             <div className={css(tw`mt-5 rounded-md shadow sm:mt-0 sm:ml-3`)}>
@@ -67,7 +69,7 @@ const Index: NextPage<LandingProps> = ({ data }) => {
                     tw`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-400 focus:outline-none focus:border-teal-300 focus:shadow-outline-teal transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10`,
                   )}
                 >
-                  View Resume
+                  {t['viewResume']}
                 </a>
               </I18nAwareLink>
             </div>
@@ -96,7 +98,11 @@ const Index: NextPage<LandingProps> = ({ data }) => {
 export const getIndexStaticProps = async (locale: string) => {
   const { getLanding } = getSdk(graphqlClient)
   const data = await getLanding({ locale })
-  return { props: { data } }
+  const t = await getI18nDictionary({
+    language: LOCALE_LANGUAGE_MAPPINGS[locale],
+    namespace: 'common',
+  })
+  return { props: { data, t } }
 }
 
 export const getStaticProps: GetStaticProps<LandingProps> = async () =>
