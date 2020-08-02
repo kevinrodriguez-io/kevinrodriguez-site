@@ -11,19 +11,22 @@ import graphqlClient from 'lib/graphql/contentful-client'
 import {
   getSdk,
   GetResumeQuery,
-  PreviousWorkCollection,
   Asset,
   ResumeAboutMe,
   ResumeAvailableTechnologiesCollection,
   ResumeStudiesCollection,
   ResumeOtherStudiesCollection,
+  ResumePreviousWorkCollection,
 } from 'lib/graphql/contentful-graphql'
+import { getI18nDictionary } from 'lib/i18n/getI18nDictionary'
+import { LOCALE_LANGUAGE_MAPPINGS } from 'lib/i18n/langs'
 
 export type ResumeProps = {
   data: GetResumeQuery
+  t: Record<string, string>
 }
 
-const Resume: NextPage<ResumeProps> = ({ data }) => {
+const Resume: NextPage<ResumeProps> = ({ data, t }) => {
   const {
     profilePicture,
     aboutMe,
@@ -35,26 +38,28 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
 
   return (
     <>
-      <Nav />
+      <Nav t={t} />
       <HeroSection
         profilePicture={profilePicture as Asset}
         aboutMe={aboutMe as ResumeAboutMe}
+        t={t}
       />
       <WorkExperienceSection
-        previousWork={
-          (previousWorkCollection as unknown) as PreviousWorkCollection
-        }
+        previousWork={previousWorkCollection as ResumePreviousWorkCollection}
+        t={t}
       />
       <TechnologiesSection
         availableTechnologiesCollection={
           availableTechnologiesCollection as ResumeAvailableTechnologiesCollection
         }
+        t={t}
       />
       <StudiesSection
         studiesCollection={studiesCollection as ResumeStudiesCollection}
         otherStudiesCollection={
           otherStudiesCollection as ResumeOtherStudiesCollection
         }
+        t={t}
       />
       <Footer />
     </>
@@ -64,7 +69,15 @@ const Resume: NextPage<ResumeProps> = ({ data }) => {
 export const getResumeStaticProps = async (locale: string) => {
   const { getResume } = getSdk(graphqlClient)
   const data = await getResume({ locale })
-  return { props: { data } }
+  const t = await getI18nDictionary({
+    language: LOCALE_LANGUAGE_MAPPINGS[locale],
+    namespace: 'common',
+  })
+  const tr = await getI18nDictionary({
+    language: LOCALE_LANGUAGE_MAPPINGS[locale],
+    namespace: 'resume',
+  })
+  return { props: { data, t: { ...t, ...tr } } }
 }
 
 export const getStaticProps: GetStaticProps = async () =>

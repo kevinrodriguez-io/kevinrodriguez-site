@@ -10,16 +10,18 @@ import { SectionHeader } from 'components/SectionHeader'
 type StudiesSectionProps = {
   studiesCollection: ResumeStudiesCollection
   otherStudiesCollection: ResumeOtherStudiesCollection
+  t: Record<string, string>
 }
 
 export const StudiesSection: React.FC<StudiesSectionProps> = ({
   studiesCollection,
   otherStudiesCollection,
+  t
 }) => {
   return (
     <section className={css(tw`text-gray-700`)}>
       <div className={css(tw`container px-5 mx-auto`)}>
-        <SectionHeader>Studies</SectionHeader>
+        <SectionHeader>{t["studies"]}</SectionHeader>
         <div className={css(tw`flex flex-wrap -m-4`)}>
           {studiesCollection.items.map(study => (
             <StudyCard

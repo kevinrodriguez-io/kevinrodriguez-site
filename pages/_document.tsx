@@ -13,19 +13,23 @@ import { EmotionCritical } from '@emotion/server/types/create-instance'
 
 type SiteDocumentProps = DocumentInitialProps &
   RenderPageResult &
-  EmotionCritical
+  EmotionCritical & {
+    lang: string
+  }
 
 export default class SiteDocument extends Document<SiteDocumentProps> {
   static async getInitialProps(ctx: DocumentContext) {
+    console.log(ctx)
+    const { lang } = (ctx.query as any) ?? 'en'
     const initialProps = await Document.getInitialProps(ctx)
     const page = await ctx.renderPage()
     const styles = extractCritical(page.html)
-    return { ...initialProps, ...page, ...styles }
+    return { ...initialProps, ...page, ...styles, lang }
   }
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang={this.props.lang}>
         <Head>
           <style
             data-emotion-css={this.props.ids.join(' ')}

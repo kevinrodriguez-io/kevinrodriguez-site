@@ -4,5 +4,11 @@
   "home": "Inicio",
   "resume": "Currículum",
   "blog": "Blog",
-  "openSource": "Código Abierto"
+  "openSource": "Código Abierto",
+  "contact": "Contactar",
+  "name": "Nombre",
+  "email": "Correo",
+  "submit": "Enviar",
+  "contactYouMessage": "Te contactaré lo más pronto posible",
+  "studies": "Estudios"
 }

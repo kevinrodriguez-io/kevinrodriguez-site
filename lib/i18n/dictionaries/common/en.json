@@ -4,5 +4,11 @@
   "home": "Home",
   "resume": "Resume",
   "blog": "Blog",
-  "openSource": "Open Source"
+  "openSource": "Open Source",
+  "contact": "Contact",
+  "name": "Name",
+  "email": "Email",
+  "submit": "Submit",
+  "contactYouMessage": "I'll Contact You As Soon As Possible",
+  "studies": "Studies"
 }

@@ -9,10 +9,12 @@ import { TechnologyGroup } from './TechnologyGroup'
 
 type TechnologiesSectionProps = {
   availableTechnologiesCollection: ResumeAvailableTechnologiesCollection
+  t: Record<string, string>
 }
 
 export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({
   availableTechnologiesCollection,
+  t
 }) => {
   const groupedTechnologies = sortWithKeyRetrieverDescending(
     Object.entries(
@@ -23,7 +25,7 @@ export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({
   return (
     <section className={css(tw`text-gray-700 py-12`)}>
       <div className={css(tw`container px-5 mx-auto`)}>
-        <SectionHeader>Technology Proficiency</SectionHeader>
+        <SectionHeader>{t["technologyProficiency"]}</SectionHeader>
         <div className={css(tw`flex flex-wrap -m-4`)}>
           {groupedTechnologies.map(([category, technologies]) => (
             <TechnologyGroup category={category} technologies={technologies} key={category} />
